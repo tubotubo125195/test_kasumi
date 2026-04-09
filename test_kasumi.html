@@ -79,7 +79,7 @@
                 return;
             }
 
-            // 消割引値（5% 切り上げ → マイナス）
+            // 割引値（5% 切り上げ → マイナス）
             const discount = -Math.ceil(price * 0.05);
 
             // 割引後の金額
@@ -92,7 +92,7 @@
             const total = discountedPrice + tax;
 
             document.getElementById("result").innerHTML =
-                `消割引値: ${formatNumber(discount)} 円<br>` +
+                `割引値: ${formatNumber(discount)} 円<br>` +
                 `消費税: ${formatNumber(tax)} 円<br>` +
                 `合計支払額: ${formatNumber(total)} 円`;
         }
