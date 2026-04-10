@@ -80,6 +80,9 @@
             // 元値 price = ceil(displayprice / 1.08)
             const price = Math.ceil(displayprice / 1.08);
 
+            // 値引き前消費税
+            const beftax = Math.floor(price * 0.08);
+
             // 割引値（5% 切り上げ → マイナス）
             const discount = -Math.ceil(price * 0.05);
 
@@ -93,7 +96,7 @@
             const total = discountedPrice + tax;
 
             document.getElementById("result").innerHTML =
-                `元値: ${formatNumber(price)} 円<br>` +
+                `元値: ${formatNumber(price)} 円 (+値引き前消費税: ${formatNumber(beftax)} 円) <br>` +
                 `割引値(5%): ${formatNumber(discount)} 円<br>` +
                 `消費税(8%): ${formatNumber(tax)} 円<br>` +
                 `合計支払額: ${formatNumber(total)} 円`;
