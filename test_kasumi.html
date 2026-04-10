@@ -96,9 +96,10 @@
             const total = discountedPrice + tax;
 
             document.getElementById("result").innerHTML =
-                `元値: ${formatNumber(price)} 円     （ + 値引前消費税: ${formatNumber(beftax)}  円 ） <br>` +
+                `元値: ${formatNumber(price)} 円<br>` +
+                `割引前消費税(8%): ${formatNumber(beftax)} 円<br>` +
                 `割引値(5%): ${formatNumber(discount)} 円<br>` +
-                `消費税(8%): ${formatNumber(tax)} 円<br>` +
+                `割引後消費税(8%): ${formatNumber(tax)} 円<br>` +
                 `合計支払額: ${formatNumber(total)} 円`;
         }
     </script>
