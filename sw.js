@@ -9,8 +9,9 @@ self.addEventListener("install", e => {
   );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
-  );
-});
+if (event.request.mode === "navigate") {
+    event.respondWith(
+        fetch(event.request, { cache: "no-store" })
+            .catch(() => caches.match(event.request))
+    );
+}
