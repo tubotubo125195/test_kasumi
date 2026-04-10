@@ -1,12 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    
     <title>支払金額計算</title>
 
     <style>
@@ -44,17 +40,11 @@
             font-size: 1.5em;
             margin-top: 20px;
             line-height: 1.6;
-            word-break: break-word;
         }
 
         @media (min-width: 768px) {
-            /* PCでは少し控えめに */
-            input {
-                font-size: 1.5em;
-            }
-            button {
-                font-size: 1.3em;
-            }
+            input { font-size: 1.5em; }
+            button { font-size: 1.3em; }
         }
     </style>
 </head>
@@ -62,8 +52,8 @@
 
     <h2>支払金額計算</h2>
 
-    <label>金額（元値）:</label>
-    <input type="number" id="price" min="0" inputmode="numeric">
+    <label>画面表示額 :</label>
+    <input type="number" id="displayprice" min="0" inputmode="numeric">
 
     <button onclick="calculate()">OK</button>
 
@@ -76,26 +66,30 @@
         }
 
         function calculate() {
-            const price = Number(document.getElementById("price").value);
+            const displayprice = Number(document.getElementById("displayprice").value);
 
-            if (isNaN(price) || price < 0) {
+            if (isNaN(displayprice) || displayprice < 0) {
                 document.getElementById("result").innerText = "正しい金額を入力してください。";
                 return;
             }
 
+            // 元値 price = ceil(displayprice / 1.08)
+            const price = Math.ceil(displayprice / 1.08);
+
             // 割引値（5% 切り上げ → マイナス）
             const discount = -Math.ceil(price * 0.05);
 
-            // 割引後の金額
+            // 割引後価格
             const discountedPrice = price + discount;
 
-            // 消費税（割引後金額の8% 切り下げ）
+            // 消費税（割引後の8% 切り下げ）
             const tax = Math.floor(discountedPrice * 0.08);
 
             // 合計
             const total = discountedPrice + tax;
 
             document.getElementById("result").innerHTML =
+                `元値: ${formatNumber(price)} 円<br>` +
                 `割引値: ${formatNumber(discount)} 円<br>` +
                 `消費税: ${formatNumber(tax)} 円<br>` +
                 `合計支払額: ${formatNumber(total)} 円`;
@@ -104,9 +98,3 @@
 
 </body>
 </html>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-</script>
